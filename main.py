@@ -1,8 +1,6 @@
-from unicodedata import name
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from fpdf import FPDF
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
