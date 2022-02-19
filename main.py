@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
+from comics import Series
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
@@ -49,16 +50,15 @@ def get_issue(issue_url, skip):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(search_str, last, first=1, skip=2):
+def get_multiple_issues(search_strs, skip):
 
-    for i in range(first, last+1):
-        s = search_str.format(nr=i)
-        get_issue(s, skip)
+    for i in search_strs:
+        get_issue(i, skip)
 
 
 if __name__ == '__main__':
     skip = 2
-    i = 7
 
-    search_str = 'x-lives-of-wolverine-{nr}-2022'
-    get_multiple_issues(search_str, 3)
+    aou = Series('age-of-ultron-00{issue}-2013')
+    urls = aou.get_issues_urls(range(1, 3))
+    get_multiple_issues(urls, skip)
