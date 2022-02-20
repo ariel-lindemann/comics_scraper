@@ -12,36 +12,42 @@ def _get_data(url):
     return r.text
 
 
-def _get_imgs(url, skip):
+def _get_imgs(url):
     print('getting images...')
     htmldata = _get_data(url)
     soup = BeautifulSoup(htmldata, 'html.parser')
     images_soup = soup.find_all('img')
 
     images_pil = []
-    x = 0
 
     for i in images_soup:
         print('.', end='')
-        x += 1
         img_url = i['src']
         img = Image.open(requests.get(img_url, stream=True).raw)
-        if(x >= skip):
+        if _check_img_belongs(img_url):
             img = img.convert('RGB')
             images_pil.append(img)
-            vertical = (img.size[0] < img.size[1])
-            if not vertical:
-                x += 1
 
     return images_pil
 
 
-def get_issue(issue: Issue, skip=2):
+def _check_img_belongs(img_url):
+
+    blacklist = [
+        'http://readallcomics.com/wp-content/uploads/2020/09/logo-1.png',
+        'http://readallcomics.com/wp-content/uploads/2019/12/prev.png',
+        'http://readallcomics.com/wp-content/uploads/2019/12/Next.png',
+        'http://readallcomics.com/wp-content/uploads/2020/03/Donate.png'
+    ]
+    return img_url not in blacklist
+
+
+def get_issue(issue: Issue):
     issue_url = issue.get_url()
     print(f'getting issue: {issue_url} ...')
     url = f'{BASE_URL}/{issue_url}'
 
-    images = _get_imgs(url, skip)
+    images = _get_imgs(url)
 
     cover = images[0]
     rest = images[1:]
@@ -51,14 +57,13 @@ def get_issue(issue: Issue, skip=2):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(issues:dict, skip):
+def get_multiple_issues(issues: dict):
 
     for i in issues.values():
-        get_issue(i, skip)
+        get_issue(i)
 
 
-def main(series:Series):
-    skip = 2
+def main(series: Series):
 
     issues = series.get_all_issues()
-    get_multiple_issues(issues, skip)
+    get_multiple_issues(issues)
