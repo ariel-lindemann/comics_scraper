@@ -7,14 +7,11 @@ class Series:
     def add_issue(self, number):
         self.issues[number] = Issue(self.url_suffix, number)
 
-    def get_issues_urls(self, issues:dict):
+    def get_issues_urls(self, issues: dict):
         issues_urls = []
 
-        
-        #issues = issues#TODO
-
         for i in issues.values():
-            
+
             issues_urls.append(i.get_url())
 
         return issues_urls

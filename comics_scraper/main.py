@@ -51,19 +51,14 @@ def get_issue(issue: Issue, skip=2):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(issues, skip):
+def get_multiple_issues(issues:dict, skip):
 
     for i in issues.values():
         get_issue(i, skip)
 
 
-def main():
+def main(series:Series):
     skip = 2
 
-    series = Series('civil-war-front-line-{issue}')
-    series.add_issue('003')
     issues = series.get_all_issues()
-    #urls = series.get_issues_urls(issues)
     get_multiple_issues(issues, skip)
-
-    # get_issue('civil-war-front-line-003')
