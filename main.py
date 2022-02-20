@@ -1,20 +1,20 @@
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from comics import Series
+from comics import Issue, Series
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
 
 
-def get_data(url):
+def _get_data(url):
     r = requests.get(url)
     return r.text
 
 
-def get_imgs(url, skip=2):
+def _get_imgs(url, skip):
     print('getting images...')
-    htmldata = get_data(url)
+    htmldata = _get_data(url)
     soup = BeautifulSoup(htmldata, 'html.parser')
     images_soup = soup.find_all('img')
 
@@ -36,11 +36,12 @@ def get_imgs(url, skip=2):
     return images_pil
 
 
-def get_issue(issue_url, skip):
-    print(f'getting issue: {issue_url}...')
+def get_issue(issue: Issue, skip=2):
+    issue_url = issue.get_url()
+    print(f'getting issue: {issue_url} ...')
     url = f'{BASE_URL}/{issue_url}'
 
-    images = get_imgs(url, skip=skip)
+    images = _get_imgs(url, skip)
 
     cover = images[0]
     rest = images[1:]
@@ -50,15 +51,19 @@ def get_issue(issue_url, skip):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(search_strs, skip):
+def get_multiple_issues(issues, skip):
 
-    for i in search_strs:
+    for i in issues:
         get_issue(i, skip)
 
 
 if __name__ == '__main__':
     skip = 2
 
-    aou = Series('age-of-ultron-00{issue}-2013')
-    urls = aou.get_issues_urls(range(1, 3))
+    series = Series('sensational-spider-man-v2-{issue}')
+    series.add_issue('022')
+    issues = series.get_all_issues()
+    urls = series.get_issues_urls(issues)
     get_multiple_issues(urls, skip)
+
+    # get_issue('civil-war-front-line-003')
