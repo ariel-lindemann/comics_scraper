@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from comics import Issue, Series
+from comics_scraper.comics import Issue, Series
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
@@ -53,17 +53,17 @@ def get_issue(issue: Issue, skip=2):
 
 def get_multiple_issues(issues, skip):
 
-    for i in issues:
+    for i in issues.values():
         get_issue(i, skip)
 
 
-if __name__ == '__main__':
+def main():
     skip = 2
 
-    series = Series('sensational-spider-man-v2-{issue}')
-    series.add_issue('022')
+    series = Series('civil-war-front-line-{issue}')
+    series.add_issue('003')
     issues = series.get_all_issues()
-    urls = series.get_issues_urls(issues)
-    get_multiple_issues(urls, skip)
+    #urls = series.get_issues_urls(issues)
+    get_multiple_issues(issues, skip)
 
     # get_issue('civil-war-front-line-003')

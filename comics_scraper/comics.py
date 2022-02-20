@@ -5,18 +5,22 @@ class Series:
         self.issues = dict()
 
     def add_issue(self, number):
-        self.issues.update(number, Issue(self.url_suffix, number))
+        self.issues[number] = Issue(self.url_suffix, number)
 
-    def get_issues_urls(self, issues):
+    def get_issues_urls(self, issues:dict):
         issues_urls = []
 
-        for i in issues:
+        
+        #issues = issues#TODO
+
+        for i in issues.values():
+            
             issues_urls.append(i.get_url())
 
         return issues_urls
 
     def get_issue(self, number):
-        return self.issues.get(number)
+        return self.issues[number]
 
     def get_all_issues(self):
         return self.issues
