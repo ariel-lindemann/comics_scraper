@@ -19,8 +19,11 @@ class Series:
     def get_issue(self, number):
         return self.issues[number]
 
-    def get_all_issues(self):
+    def get_issues_dict(self):
         return self.issues
+
+    def get_all_issues(self):
+        return self.issues.values()
 
     def get_url(self):
         return self.url_suffix
