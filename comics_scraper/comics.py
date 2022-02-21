@@ -34,6 +34,15 @@ class Issue:
         self.downloaded = False
         self.read = False
 
+    def increment_url(self):
+        issue_num = self.url
+        n = int(issue_num[-1])
+        if n == 9:
+            m = int(issue_num[-2])
+            issue_num = issue_num[:-2] + f'{m+1}'
+        issue_num += f'{(n+1)%10}'
+        self.url = issue_num
+
     def set_downloaded(self, flag=True):
         self.downloaded = flag
 

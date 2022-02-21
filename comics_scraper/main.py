@@ -21,7 +21,6 @@ def _get_imgs(url):
     images_pil = []
 
     for i in images_soup:
-        print('.', end='')
         img_url = i['src']
         img = Image.open(requests.get(img_url, stream=True).raw)
         if _check_img_belongs(img_url):
@@ -49,6 +48,9 @@ def get_issue(issue: Issue):
 
     images = _get_imgs(url)
 
+    if len(images) == 0:
+        raise ComicNotFoundException(f'{issue_url} not found')
+
     cover = images[0]
     rest = images[1:]
     pdf_title = issue_url.replace('-', ' ')
@@ -60,7 +62,17 @@ def get_issue(issue: Issue):
 def get_multiple_issues(issues: dict):
 
     for i in issues.values():
-        get_issue(i)
+        try:
+            get_issue(i)
+        except ComicNotFoundException:
+            i.increment_url()
+            try:
+                get_issue(i)
+            except ComicNotFoundException:
+                print(f'{i.url} not found')
+
+class ComicNotFoundException(Exception):
+    pass
 
 
 def main(series: Series):
