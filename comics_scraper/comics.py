@@ -5,7 +5,7 @@ class Series:
         self.issues = dict()
 
     def add_issue(self, number):
-        self.issues[str(number)] = Issue(self.url_suffix, number)
+        self.issues[str(number)] = Issue(self, number)
 
     def add_multiple_issues(self, numbers):
         for n in numbers:
@@ -35,9 +35,9 @@ class Series:
 
 class Issue:
 
-    def __init__(self, series_url, number):
-        self.number = number
-        self.url = series_url.format(issue=number)
+    def __init__(self, series: Series, number):
+        self.number = str(number)
+        self.url = series.url_suffix.format(issue=str(number))
         self.downloaded = False
         self.read = False
 
