@@ -59,9 +59,9 @@ def get_issue(issue: Issue):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(issues: dict):
+def get_multiple_issues(issues: Issue):
 
-    for i in issues.values():
+    for i in issues:
         try:
             get_issue(i)
         except ComicNotFoundException:
