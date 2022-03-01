@@ -59,7 +59,7 @@ def get_issue(issue: Issue):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(issues: Issue):
+def get_multiple_issues(issues: list[Issue]):
 
     for i in issues:
         try:
