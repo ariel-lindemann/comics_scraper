@@ -5,7 +5,11 @@ class Series:
         self.issues = dict()
 
     def add_issue(self, number):
-        self.issues[number] = Issue(self.url_suffix, number)
+        self.issues[str(number)] = Issue(self.url_suffix, number)
+
+    def add_multiple_issues(self, numbers):
+        for n in numbers:
+            self.add_issue(n)
 
     def get_issues_urls(self, issues: dict):
         issues_urls = []
