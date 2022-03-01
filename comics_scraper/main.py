@@ -41,7 +41,7 @@ def _check_img_belongs(img_url):
     return img_url not in blacklist
 
 
-def get_issue(issue: Issue):
+def download_issue(issue: Issue):
     issue_url = issue.get_url()
     print(f'getting issue: {issue_url} ...')
     url = f'{BASE_URL}/{issue_url}'
@@ -59,15 +59,15 @@ def get_issue(issue: Issue):
                save_all=True, append_images=rest)
 
 
-def get_multiple_issues(issues: list[Issue]):
+def download_multiple_issues(issues: list[Issue]):
 
     for i in issues:
         try:
-            get_issue(i)
+            download_issue(i)
         except ComicNotFoundException:
             i.increment_url()
             try:
-                get_issue(i)
+                download_issue(i)
             except ComicNotFoundException:
                 print(f'{i.url} not found')
 
@@ -78,4 +78,4 @@ class ComicNotFoundException(Exception):
 def main(series: Series):
 
     issues = series.get_all_issues()
-    get_multiple_issues(issues)
+    download_multiple_issues(issues)
