@@ -8,16 +8,14 @@ class Series:
         self.issues[number] = Issue(self.url_suffix, number)
 
     def get_issues_urls(self, issues: dict):
-        issues_urls = []
-
-        for i in issues.values():
-
-            issues_urls.append(i.get_url())
-
+        issues_urls = [i.get_url() for i in issues.values()]
         return issues_urls
 
     def get_issue(self, number):
         return self.issues[number]
+
+    def get_issues(self, numbers):
+        return [self.issues[n] for n in numbers]
 
     def get_issues_dict(self):
         return self.issues
