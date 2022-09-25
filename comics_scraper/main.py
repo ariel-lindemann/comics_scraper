@@ -53,7 +53,8 @@ def download_issue(issue: Issue):
 
     cover = images[0]
     rest = images[1:]
-    pdf_title = issue_url.replace('-', ' ')
+    pdf_title = issue_url.split('/')[-1]
+    pdf_title = pdf_title.replace('-', ' ')
 
     cover.save(f'{COMICS_DIR}{pdf_title}.pdf', 'PDF',
                save_all=True, append_images=rest)
