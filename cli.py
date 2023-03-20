@@ -15,7 +15,7 @@ def cli_interaction() -> Optional[dict[str, str]]:
         if not links_dict:
             print(
                 f'Sorry, we couldn\'t find any series named \"{series_name}\"')
-            tryagain = _yes_or_no_modal('Would you like to try again? [Y/n]')
+            tryagain = _yes_or_no_modal('Would you like to try again?]')
             if not tryagain:
                 break
 
@@ -58,7 +58,7 @@ def issue_selection(series_url: str, selected: dict[str, str]) -> dict[str, str]
 
 def _yes_or_no_modal(message: str) -> bool:
     while True:
-        answer = input(f'{message}\n')
+        answer = input(f'{message} [Y/n]\n')
         if not answer:
             return True
         if answer.lower() == 'yes' or answer.lower() == 'y':
