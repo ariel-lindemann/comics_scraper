@@ -1,11 +1,19 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 from PIL import Image
 from comics import Series, Issue
 
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
+
+def find_links(series_name: str) -> dict[str:str]:
+    url = BASE_URL + f'?story={series_name}&s=&type=comic'
+    htmldata = _get_data(url)
+    a_tags = SoupStrainer('a')
+    soup = BeautifulSoup(htmldata, 'html.parser', parse_only=a_tags)
+    # TODO returns dict of links and text titles
+    print(soup)
 
 
 def _get_data(url):
