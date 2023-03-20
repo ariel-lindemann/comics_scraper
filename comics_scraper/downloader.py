@@ -6,6 +6,7 @@ from comics_scraper.comics import Series, Issue
 
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
+BSPARSER = 'html.parser'
 
 
 def find_links(series_name: str) -> dict[str:str]:
@@ -14,7 +15,7 @@ def find_links(series_name: str) -> dict[str:str]:
     url = BASE_URL + f'?story={series_name}&s=&type=comic'
     htmldata = _get_data(url)
     a_tags = SoupStrainer('a')
-    soup = BeautifulSoup(htmldata, 'html.parser', parse_only=a_tags)
+    soup = BeautifulSoup(htmldata, BSPARSER, parse_only=a_tags)
 
     soup = soup.find_all(title=True)
 
@@ -33,7 +34,7 @@ def _get_data(url):
 def _get_imgs(url):
     print('getting images...')
     htmldata = _get_data(url)
-    soup = BeautifulSoup(htmldata, 'html.parser')
+    soup = BeautifulSoup(htmldata, BSPARSER)
     images_soup = soup.find_all('img')
 
     images_pil = []
