@@ -48,14 +48,6 @@ def _get_imgs(url):
 
     return images_pil
 
-def _check_link_belongs(url):
-    blacklist = [
-        "https://readallcomics.com/",
-        'http://readallcomics.com/wp-content/uploads/2019/12/prev.png',
-        'http://readallcomics.com/wp-content/uploads/2019/12/Next.png',
-        'http://readallcomics.com/wp-content/uploads/2020/03/Donate.png'
-    ]
-    return url not in blacklist
 
 def _check_img_belongs(img_url):
 
