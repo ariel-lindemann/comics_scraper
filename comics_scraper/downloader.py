@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 from PIL import Image
-from comics import Series, Issue
+from comics_scraper.comics import Series, Issue
 
 
 BASE_URL = 'http://readallcomics.com'
