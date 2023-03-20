@@ -4,7 +4,6 @@ from PIL import Image
 from comics_scraper.comics import Series, Issue
 
 
-BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
 BSPARSER = 'html.parser'
 
@@ -43,15 +42,7 @@ def _check_img_belongs(img_url):
     return img_url not in blacklist
 
 
-def download_issue(issue: Issue):
-    issue_url = issue.get_url()
-    full_url = f'{BASE_URL}/{issue_url}'
-    title = issue_url.replace('-', ' ')
-
-    _download_url(full_url, title )
-
-
-def _download_url(url, pdf_title):
+def download_issue(url, pdf_title):
     print(f'getting issue: {url} ...')
 
     images = _get_imgs(url)
@@ -66,17 +57,13 @@ def _download_url(url, pdf_title):
                save_all=True, append_images=rest)
 
 
-def download_multiple_issues(issues: list[Issue]):
+def download_multiple_issues(issues: dict[str, str]):
 
-    for i in issues:
+    for title, url in issues.items():
         try:
-            download_issue(i)
+            download_issue(url, title)
         except ComicNotFoundException:
-            i.increment_url()
-            try:
-                download_issue(i)
-            except ComicNotFoundException:
-                print(f'{i.url} not found')
+            print(f'{url} not found')
 
 
 class ComicNotFoundException(Exception):
