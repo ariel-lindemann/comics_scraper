@@ -16,6 +16,7 @@ def cli_interaction() -> Optional[dict[str,str]]:
 
         # select issue to download
         issues_links = find_links_on_page(series_url)
+        _list_links(issues_links, 'Select the issue you are interested in')
         issue_name, selected_link = selection_modal(issues_links)
 
         print(f'You selected the following issue: {issue_name}')
