@@ -1,4 +1,4 @@
-from downloader import download_issue, download_multiple_issues
+from comics_scraper.downloader import download_issue, download_multiple_issues, find_links
 from comics_scraper.comics import Issue, Series
 
 
