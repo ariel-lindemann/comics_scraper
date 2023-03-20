@@ -7,13 +7,22 @@ from comics_scraper.comics import Series, Issue
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
 
+
 def find_links(series_name: str) -> dict[str:str]:
+    '''Returns a mapping of matching titles to  links of their respective series pages
+    '''
     url = BASE_URL + f'?story={series_name}&s=&type=comic'
     htmldata = _get_data(url)
     a_tags = SoupStrainer('a')
     soup = BeautifulSoup(htmldata, 'html.parser', parse_only=a_tags)
-    # TODO returns dict of links and text titles
-    print(soup)
+
+    soup = soup.find_all(title=True)
+
+    links = [s['href'] for s in soup]
+    titles = [s['title'] for s in soup]
+    links_dict = dict(zip(titles, links))
+
+    return links_dict
 
 
 def _get_data(url):
@@ -38,6 +47,14 @@ def _get_imgs(url):
 
     return images_pil
 
+def _check_link_belongs(url):
+    blacklist = [
+        "https://readallcomics.com/",
+        'http://readallcomics.com/wp-content/uploads/2019/12/prev.png',
+        'http://readallcomics.com/wp-content/uploads/2019/12/Next.png',
+        'http://readallcomics.com/wp-content/uploads/2020/03/Donate.png'
+    ]
+    return url not in blacklist
 
 def _check_img_belongs(img_url):
 
