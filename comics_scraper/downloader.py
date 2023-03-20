@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
 from PIL import Image
 from comics_scraper.comics import Series, Issue
 
@@ -7,23 +7,6 @@ from comics_scraper.comics import Series, Issue
 BASE_URL = 'http://readallcomics.com'
 COMICS_DIR = ''
 BSPARSER = 'html.parser'
-
-
-def find_links(series_name: str) -> dict[str:str]:
-    '''Returns a mapping of matching titles to  links of their respective series pages
-    '''
-    url = BASE_URL + f'?story={series_name}&s=&type=comic'
-    htmldata = _get_data(url)
-    a_tags = SoupStrainer('a')
-    soup = BeautifulSoup(htmldata, BSPARSER, parse_only=a_tags)
-
-    soup = soup.find_all(title=True)
-
-    links = [s['href'] for s in soup]
-    titles = [s['title'] for s in soup]
-    links_dict = dict(zip(titles, links))
-
-    return links_dict
 
 
 def _get_data(url):
