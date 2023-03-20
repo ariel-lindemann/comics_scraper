@@ -1,6 +1,7 @@
+from typing import Optional
 from comics_scraper import search_series, filter_links, find_links_on_page
 
-def cli_interaction():
+def cli_interaction() -> Optional[dict[str,str]]:
     print('Hello, welcome to comics scraper!\nWhich series are you interested in?')
     series_name = input()
     links_dict = search_series(series_name)
@@ -11,11 +12,19 @@ def cli_interaction():
     else: 
         _list_links(links_dict, 'Select one of the following')
         series_name, series_url = selection_modal(links_dict)
-        # TODO issue selection modal
         print(f'You selected \"{series_name}\"')
 
+        # select issue to download
+        issues_links = find_links_on_page(series_url)
+        issue_name, selected_link = selection_modal(issues_links)
 
-def select_series(links_dict: dict[str:str]) -> tuple[str:str]:
+        print(f'You selected the following issue: {issue_name}')
+
+        return {issue_name: selected_link}
+
+
+def selection_modal(links_dict: dict[str,str]) -> tuple[str,str]:
+    # TODO select by number
     while True:
         if len(links_dict) == 1:
             (k, v) = links_dict.popitem()
@@ -28,7 +37,7 @@ def select_series(links_dict: dict[str:str]) -> tuple[str:str]:
         _list_links(links_dict, 'Select one of the following')
 
 
-def _list_links(links_dict: dict[str:str], message: str) -> None:
+def _list_links(links_dict: dict[str,str], message: str) -> None:
     print(message)
     for i, e in enumerate(links_dict.keys()):
         print(f'    {i}.\t {e}')

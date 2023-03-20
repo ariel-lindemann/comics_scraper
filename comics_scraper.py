@@ -2,7 +2,10 @@ import cli
 
 if __name__ == '__main__':
 
-    cli.cli_interaction()
+    selected_issues = cli.cli_interaction()
+    print(selected_issues)
+
+
 
     # TODO issue_page
     # TODO CLI
