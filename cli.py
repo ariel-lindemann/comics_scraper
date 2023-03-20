@@ -32,7 +32,10 @@ def cli_interaction() -> Optional[dict[str, str]]:
             if not different_series:
                 break
 
-    return selected_issues
+    _list_links(selected_issues, 'You have selected the following issues:')
+    download_confirmed = _yes_or_no_modal('Do you wish do download them?')
+
+    return selected_issues if download_confirmed else None
 
 
 def issue_selection(series_url: str, selected: dict[str, str]) -> dict[str, str]:
