@@ -1,16 +1,16 @@
-from comics_scraper import find_links, filter_links
+from comics_scraper import search_series, filter_links, find_links_on_page
 
 def cli_interaction():
     print('Hello, welcome to comics scraper!\nWhich series are you interested in?')
     series_name = input()
-    links_dict = find_links(series_name)
+    links_dict = search_series(series_name)
 
     if not links_dict:
         print(f'Sorry, we couldn\'t find any series named \"{series_name}\"')
 
     else: 
         _list_links(links_dict, 'Select one of the following')
-        series_name, series_url = select_series(links_dict)
+        series_name, series_url = selection_modal(links_dict)
         # TODO issue selection modal
         print(f'You selected \"{series_name}\"')
 
