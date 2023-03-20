@@ -43,17 +43,22 @@ def _check_img_belongs(img_url):
 
 def download_issue(issue: Issue):
     issue_url = issue.get_url()
-    print(f'getting issue: {issue_url} ...')
-    url = f'{BASE_URL}/{issue_url}'
+    full_url = f'{BASE_URL}/{issue_url}'
+    title = issue_url.replace('-', ' ')
+
+    _download_url(full_url, title )
+
+
+def _download_url(url, pdf_title):
+    print(f'getting issue: {url} ...')
 
     images = _get_imgs(url)
 
     if len(images) == 0:
-        raise ComicNotFoundException(f'{issue_url} not found')
+        raise ComicNotFoundException(f'{url} not found')
 
     cover = images[0]
     rest = images[1:]
-    pdf_title = issue_url.replace('-', ' ')
 
     cover.save(f'{COMICS_DIR}{pdf_title}.pdf', 'PDF',
                save_all=True, append_images=rest)
@@ -70,6 +75,7 @@ def download_multiple_issues(issues: list[Issue]):
                 download_issue(i)
             except ComicNotFoundException:
                 print(f'{i.url} not found')
+
 
 class ComicNotFoundException(Exception):
     pass
