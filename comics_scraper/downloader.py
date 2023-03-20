@@ -42,8 +42,8 @@ def _check_img_belongs(img_url):
     return img_url not in blacklist
 
 
-def download_issue(url, pdf_title):
-    print(f'getting issue: {url} ...')
+def download_issue(url, title):
+    print(f'getting issue: {title} ...')
 
     images = _get_imgs(url)
 
@@ -53,7 +53,7 @@ def download_issue(url, pdf_title):
     cover = images[0]
     rest = images[1:]
 
-    cover.save(f'{COMICS_DIR}{pdf_title}.pdf', 'PDF',
+    cover.save(f'{COMICS_DIR}{title}.pdf', 'PDF',
                save_all=True, append_images=rest)
 
 
