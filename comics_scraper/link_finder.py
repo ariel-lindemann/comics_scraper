@@ -1,8 +1,9 @@
 
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
-from comics_scraper.downloader import BASE_URL, BSPARSER
+from comics_scraper.downloader import BSPARSER
 
+BASE_URL = 'https://readallcomics.com/'
 
 def search_series(series_name: str) -> dict[str:str]:
     '''Returns a mapping of matching titles to  links of their respective series pages
