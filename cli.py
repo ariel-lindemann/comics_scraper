@@ -82,7 +82,7 @@ def _selection_modal(links_dict: dict[str, str]) -> Optional[tuple[str, str]]:
             return k, v
         print('Narrow the list down by typing more words or type \'#\' before a number to select an entry directly.')
         selection = input()
-        if selection == 'END':
+        if selection == RETURN_COMMAND:
             return None
         if selection[0] == '#':
             try:
