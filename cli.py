@@ -75,7 +75,7 @@ def _yes_or_no_modal(message: str) -> bool:
 
 
 def _selection_modal(links_dict: dict[str, str]) -> Optional[tuple[str, str]]:
-    # TODO handle wrong input (keep unfiltered dict)
+    unfiltered_links = links_dict
     while True:
         if len(links_dict) == 1:
             (k, v) = links_dict.popitem()
@@ -93,6 +93,10 @@ def _selection_modal(links_dict: dict[str, str]) -> Optional[tuple[str, str]]:
             except TypeError:
                 continue
         links_dict = filter_links(selection, links_dict)
+        if not links_dict:
+            print('No entries match your input. Please try again')
+            links_dict = unfiltered_links
+
         _list_links(links_dict, 'Select one of the following')
 
 
