@@ -46,6 +46,7 @@ def download_issue(url, title):
     print(f'getting issue: {title} ...')
 
     images = _get_imgs(url)
+    title = _sanitiize_title(title)
 
     if len(images) == 0:
         raise ComicNotFoundException(f'{url} not found')
@@ -68,6 +69,10 @@ def download_multiple_issues(issues: dict[str, str]):
         except ComicNotFoundException:
             print(f'{url} not found')
 
+
+def _sanitiize_title(title):
+    # TODO cover additional special symbols
+    return title.replace('/', ' ')
 
 class ComicNotFoundException(Exception):
     pass
