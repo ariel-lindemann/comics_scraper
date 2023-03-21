@@ -58,7 +58,10 @@ def download_issue(url, title):
 
 
 def download_multiple_issues(issues: dict[str, str]):
-
+    if not issues:
+        print('No issues to download!')
+        return
+    
     for title, url in issues.items():
         try:
             download_issue(url, title)
