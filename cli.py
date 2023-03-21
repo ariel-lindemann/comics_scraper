@@ -1,6 +1,7 @@
 from typing import Optional
 from comics_scraper import search_series, filter_links, find_links_on_page
 
+RETURN_COMMAND = 'END'
 
 def cli_interaction() -> Optional[dict[str, str]]:
     print('Hello, welcome to comics scraper!')
@@ -20,7 +21,10 @@ def cli_interaction() -> Optional[dict[str, str]]:
 
         else:
             _list_links(links_dict, 'Select one of the following')
-            series_name, series_url = _selection_modal(links_dict)
+            try:
+                series_name, series_url = _selection_modal(links_dict)
+            except TypeError:
+                break
             print(f'You selected \"{series_name}\"')
 
             # select issues to download
@@ -44,7 +48,10 @@ def issue_selection(series_url: str, selected: dict[str, str]) -> dict[str, str]
     issues_links = find_links_on_page(series_url)
     while True:
         _list_links(issues_links, 'Select the issue you are interested in')
-        selected_name, selected_link = _selection_modal(issues_links)
+        try:
+            selected_name, selected_link = _selection_modal(issues_links)
+        except TypeError:
+            break
         print(f'You selected the following issue: {selected_name}')
 
         selected[selected_name] = selected_link
@@ -67,7 +74,7 @@ def _yes_or_no_modal(message: str) -> bool:
         message = 'Please answer yes or no:'
 
 
-def _selection_modal(links_dict: dict[str, str]) -> tuple[str, str]:
+def _selection_modal(links_dict: dict[str, str]) -> Optional[tuple[str, str]]:
     # TODO handle wrong input (keep unfiltered dict)
     while True:
         if len(links_dict) == 1:
@@ -76,7 +83,7 @@ def _selection_modal(links_dict: dict[str, str]) -> tuple[str, str]:
         print('Narrow the list down by typing more words or type \'#\' before a number to select an entry directly.')
         selection = input()
         if selection == 'END':
-            return '', ''  # TODO
+            return None
         if selection[0] == '#':
             try:
                 k, v = _direct_selection(links_dict, selection)
