@@ -3,7 +3,6 @@ from comics_scraper import search_series, filter_links, find_links_on_page
 
 
 def cli_interaction() -> Optional[dict[str, str]]:
-    # TODO ask for download
     print('Hello, welcome to comics scraper!')
     selected_issues = dict()
 
@@ -69,18 +68,40 @@ def _yes_or_no_modal(message: str) -> bool:
 
 
 def _selection_modal(links_dict: dict[str, str]) -> tuple[str, str]:
-    # TODO select by number
     # TODO handle wrong input (keep unfiltered dict)
     while True:
         if len(links_dict) == 1:
             (k, v) = links_dict.popitem()
             return k, v
-        print('Narrow the list down by typing more words')
+        print('Narrow the list down by typing more words or type \'#\' before a number to select an entry directly.')
         selection = input()
         if selection == 'END':
             return '', ''  # TODO
+        if selection[0] == '#':
+            try:
+                k, v = _direct_selection(links_dict, selection)
+                return k, v
+            except TypeError:
+                continue
         links_dict = filter_links(selection, links_dict)
         _list_links(links_dict, 'Select one of the following')
+
+
+def _direct_selection(links_dict: dict[str, str], selection: str) -> Optional[tuple[str, str]]:
+    '''Select an entry by its index
+    '''
+    try:
+        index = int(selection[1:])
+    except ValueError:
+        print(f'{selection[1:]} is not a number! Please try again.')
+        return None
+    try:
+        key = list(links_dict)[index]
+        value = list(links_dict.values())[index]
+    except IndexError:
+        print('Number out of range. Please try again.')
+        return None
+    return key, value
 
 
 def _list_links(links_dict: dict[str, str], message: str) -> None:
