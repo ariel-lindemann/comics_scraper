@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from comics_scraper.comics import Series, Issue
 
 
 COMICS_DIR = ''
@@ -73,6 +72,7 @@ def download_multiple_issues(issues: dict[str, str]):
 def _sanitiize_title(title):
     # TODO cover additional special symbols
     return title.replace('/', ' ')
+
 
 class ComicNotFoundException(Exception):
     pass

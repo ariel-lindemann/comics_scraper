@@ -3,6 +3,7 @@ from comics_scraper import search_series, filter_links, find_links_on_page
 
 RETURN_COMMAND = 'END'
 
+
 def cli_interaction() -> Optional[dict[str, str]]:
     print('Hello, welcome to comics scraper!')
     selected_issues = dict()

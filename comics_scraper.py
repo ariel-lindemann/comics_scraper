@@ -9,6 +9,3 @@ if __name__ == '__main__':
 
     download_multiple_issues(selected_issues)
     print('Finished downloading')
-
-    # TODO issue_page
-    # TODO CLI
