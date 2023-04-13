@@ -1,5 +1,4 @@
 import pytest
-import mock
 import cli
 
 SERIES_NAME = 'The Adventures of Tintin'
