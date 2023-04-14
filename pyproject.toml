@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comics_scraper"
+version = "0.1.1"
+description = "Download comics from the web."
+readme = "README.md"
+authors = [{ name = "Ariel Lindemann", email = "ariel.lindemann@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["feed", "reader", "tutorial"]
+dependencies = [
+    "beautifulsoup4",
+    "Pillow",
+    "requests",
+]
+requires-python = ">=3.9"
