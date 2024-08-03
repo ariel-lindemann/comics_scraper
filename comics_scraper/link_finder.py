@@ -15,6 +15,10 @@ def search_series(series_name: str) -> dict[str:str]:
 def find_links_on_page(url: str) -> dict[str:str]:
     '''Returns dictionary of links on the provided page
     '''
+    blacklist = [
+        'Read All Comics Online'
+    ]
+
     htmldata = requests.get(url).text
     a_tags = SoupStrainer('a')
     soup = BeautifulSoup(htmldata, BSPARSER, parse_only=a_tags)
@@ -24,6 +28,9 @@ def find_links_on_page(url: str) -> dict[str:str]:
     links = [s['href'] for s in soup]
     titles = [s['title'] for s in soup]
     links_dict = dict(zip(titles, links))
+
+    for entry in blacklist:
+        del links_dict[entry]
 
     return links_dict
 
