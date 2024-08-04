@@ -34,9 +34,14 @@ def _check_img_belongs(img_url):
 
     blacklist = [
         'http://readallcomics.com/wp-content/uploads/2020/09/logo-1.png',
+        'https://readallcomics.com/wp-content/uploads/2020/09/logo-1.png',
         'http://readallcomics.com/wp-content/uploads/2019/12/prev.png',
+        'https://readallcomics.com/wp-content/uploads/2019/12/prev.png',
         'http://readallcomics.com/wp-content/uploads/2019/12/Next.png',
+        'https://readallcomics.com/wp-content/uploads/2019/12/Next.png',
         'http://readallcomics.com/wp-content/uploads/2020/03/Donate.png'
+        'https://readallcomics.com/wp-content/uploads/2020/03/Donate.png',
+        'https://readallcomics.com/wp-content/uploads/2022/05/readallNOVELbanner.jpg'
     ]
     return img_url not in blacklist
 
