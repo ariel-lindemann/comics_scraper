@@ -1,4 +1,5 @@
 import requests
+from alive_progress import alive_bar
 from bs4 import BeautifulSoup
 from PIL import Image
 
@@ -20,12 +21,15 @@ def _get_imgs(url):
 
     images_pil = []
 
-    for i in images_soup:
-        img_url = i['src']
-        img = Image.open(requests.get(img_url, stream=True).raw)
-        if _check_img_belongs(img_url):
-            img = img.convert('RGB')
-            images_pil.append(img)
+    with alive_bar(len(images_soup)) as bar:
+        for i in images_soup:
+            img_url = i['src']
+            img = Image.open(requests.get(img_url, stream=True).raw)
+            if _check_img_belongs(img_url):
+                img = img.convert('RGB')
+                images_pil.append(img)
+
+            bar()
 
     return images_pil
 
