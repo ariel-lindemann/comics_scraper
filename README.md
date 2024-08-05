@@ -20,7 +20,7 @@ Install dependencies:
 
 And run the program by typing
 
-`python3 -m comics_scraper.py`
+`python3 -m main.py`
 
 ## Usage
 
