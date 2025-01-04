@@ -30,7 +30,7 @@ def find_links_on_page(url: str) -> dict[str:str]:
     links_dict = dict(zip(titles, links))
 
     for entry in blacklist:
-        del links_dict[entry]
+        links_dict.pop(entry, None)
 
     return links_dict
 
